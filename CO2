@@ -1,0 +1,118 @@
+CO2_loop.py
+import glob
+import pandas as pd
+import os
+import datetime, pytz
+import datetime as dt
+
+# 1 - Insert "masterpath" folder location (ie folder where all files are kept)
+# 2 - Insert specific files attribute under "files" (ie *PM_OU_*, *CO_IN_*, etc)
+# 3 - At bottom of code, insert where you would like the csv files to be saved
+
+masterpath = 'C:\\Users\\Kari\\Desktop\\HUD Data Dump\\AllFiles\\'
+
+files = [f for f in glob.glob(masterpath + "*CO2_OU_*.xls", recursive=True)]
+loopCO2 = pd.DataFrame()
+rawCO2 = pd.DataFrame()
+OneMinCO2 = pd.DataFrame()
+
+A = 1
+
+for f in files:
+    # paste file path for CO2 file, inside or outside, in the quotations below
+
+    path = f
+    file = (os.path.basename(path))
+    columnsTitles = ['DateTime', 'HouseNumber', 'Visit', 'Test', 'Location', 'Monitor', 'Variable', 'Unit', 'Value']
+
+    loopCO2 = pd.read_csv(path, header=[0], delimiter='\t', squeeze=True)
+
+    loopCO2['DateTime'] = pd.to_datetime(loopCO2['Date'] + ' ' + loopCO2['Time'])
+
+    loopCO2.rename(columns={loopCO2.columns[7]: 'Value'}, inplace=True)
+
+    loopCO2['HouseNumber'] = file.split('_')[0]
+
+    loopCO2['Visit'] = file.split('_')[1]
+
+    loopCO2['Test'] = file.split('_')[2]
+
+    loopCO2['Location'] = file.split('_')[3]
+
+    loopCO2['Monitor'] = file.split('_')[4]
+
+    loopCO2['Variable'] = 'CO2'
+
+    loopCO2['Unit'] = 'ppm'
+
+    loopCO2 = loopCO2.reindex(columns=columnsTitles)
+
+    loopCO2.set_index('DateTime', inplace=True)
+
+    # loopCO2.drop('epoch', axis=1, inplace=True)
+
+    # reference calibration file to calibrate raw CO2 values, and create new dataframe with these values
+
+    visit = file.split('_')[1]
+    location = file.split('_')[3]
+    monitor = file.split('_')[4]
+    value = loopCO2['Value']
+
+    CalibCO2 = loopCO2.copy()
+
+    from CO2_Calibration import HUD_CO2calibration
+
+    CalibValues = HUD_CO2calibration(visit, location, monitor, value)
+
+    CalibCO2['Value'] = CalibValues
+
+    # use calibrated data to create new dataframe with 1 minute averages
+
+    OneMinLoopCO2 = pd.DataFrame()
+
+    OneMinLoopCO2 = (CalibCO2.resample("1T").mean())
+    OneMinLoopCO2['DateTime'] = pd.to_datetime(OneMinLoopCO2.index)
+
+    OneMinLoopCO2['Date'] = pd.to_datetime(OneMinLoopCO2['DateTime']).dt.date
+    OneMinLoopCO2['Time'] = pd.to_datetime(OneMinLoopCO2['DateTime']).dt.time
+
+    OneMinLoopCO2['HouseNumber'] = file.split('_')[0]
+
+    OneMinLoopCO2['Visit'] = file.split('_')[1]
+
+    OneMinLoopCO2['Test'] = file.split('_')[2]
+
+    OneMinLoopCO2['Location'] = file.split('_')[3]
+
+    OneMinLoopCO2['Variable'] = 'CO2'
+
+    OneMinLoopCO2['Monitor'] = file.split('_')[4]
+
+    OneMinLoopCO2['Unit'] = 'ppm'
+
+    OneMinLoopCO2 = OneMinLoopCO2.reindex(columns=columnsTitles)
+
+    dt = datetime.datetime(1970, 1, 1)
+    utc_dt = pytz.utc.localize(dt)
+
+    # OneMinLoopCO2['epoch'] = (OneMinLoopCO2['DateTime'] - utc_dt).dt.total_seconds()
+
+    OneMinLoopCO2.set_index('DateTime', inplace=True)
+
+    # OneMinLoopCO2.drop('DateTime', axis=1, inplace=True)
+
+
+    if A == 1:
+        rawCO2 = loopCO2
+        OneMinCO2 = OneMinLoopCO2
+
+    if A > 1:
+        rawCO2 = pd.concat([loopCO2, rawCO2])
+        OneMinCO2 = pd.concat([OneMinLoopCO2, OneMinCO2])
+
+    A = A + 1
+    print(f)
+
+
+# rawCO2.to_csv(r'C:\Users\Kari\Desktop\HUD Data Dump\ProcessedFiles\CO2_OU_RAW.csv')
+OneMinCO2.to_csv(r'C:\Users\Kari\Desktop\HUD Data Dump\ProcessedFiles\CO2_OU_1min.csv')
