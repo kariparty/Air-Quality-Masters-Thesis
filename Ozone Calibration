@@ -1,0 +1,146 @@
+O3_Calibration.py
+
+
+def HUD_O3calibration(Visit, Monitor, Value):
+
+
+# SU7 O3 - CALIBRATED WITH FA7 VALUES
+
+    if Visit == 'SU7' and Monitor == '137':
+        Value = (1) * Value + 0
+
+    if Visit == 'SU7' and Monitor == '083':
+        Value = (1.5136) * Value - 3.0561
+
+    if Visit == 'SU7' and Monitor == '091':
+        Value = (0.9643) * Value + 7.5596
+
+    if Visit == 'SU7' and Monitor == '138':
+        Value = (1.5434) * Value - 9.526
+
+    if Visit == 'SU7' and Monitor == '136':
+        Value = (1.483) * Value + 31.395
+
+    if Visit == 'SU7' and Monitor == '094':
+        Value = (1.3173) * Value + 23.505
+
+    if Visit == 'SU7' and Monitor == '066':
+        Value = (0.9466) * Value + 19.914
+
+    if Visit == 'SU7' and Monitor == '097':
+        Value = (0.9983) * Value + 17.402
+
+#FA7 Values
+
+    if Visit == 'FA7' and Monitor == '137':
+        Value = (1) * Value + 0
+
+    if Visit == 'FA7' and Monitor == '083':
+        Value = (1.5136) * Value - 3.0561
+
+    if Visit == 'FA7' and Monitor == '091':
+        Value = (0.9643) * Value + 7.5596
+
+    if Visit == 'FA7' and Monitor == '138':
+        Value = (1.5434) * Value - 9.526
+
+    if Visit == 'FA7' and Monitor == '136':
+        Value = (1.483) * Value + 31.395
+
+    if Visit == 'FA7' and Monitor == '094':
+        Value = (1.3173) * Value + 23.505
+
+    if Visit == 'FA7' and Monitor == '066':
+        Value = (0.9466) * Value + 19.914
+
+    if Visit == 'FA7' and Monitor == '097':
+        Value = (0.9983) * Value + 17.402
+
+
+# SP8 Values
+
+    if Visit == 'SP8' and Monitor == '137':
+        Value = (1) * Value + 0
+
+    if Visit == 'SP8' and Monitor == '083':
+        Value = (1.0826) * Value + 4.1839
+
+    if Visit == 'SP8' and Monitor == '091':
+        Value = (1.0912) * Value - 0.9505
+
+    if Visit == 'SP8' and Monitor == '138':
+        Value = (1.4078) * Value - 4.0839
+
+    if Visit == 'SP8' and Monitor == '731':
+        Value = (0.3191) * Value + 15.282
+
+    if Visit == 'SP8' and Monitor == '136':
+        Value = (0.2425) * Value + 21.134
+
+    if Visit == 'SP8' and Monitor == '094':
+        Value = (0.3408) * Value + 16.734
+
+    if Visit == 'SP8' and Monitor == '066':
+        Value = (0.2679) * Value + 14.68
+
+    if Visit == 'SP8' and Monitor == '097':
+        Value = (0.2942) * Value + 12.312
+
+
+    # SU8 calibrated with SP8 values
+
+    if Visit == 'SU8' and Monitor == '137':
+        Value = (1) * Value + 0
+
+    if Visit == 'SU8' and Monitor == '083':
+        Value = (1.0826) * Value + 4.1839
+
+    if Visit == 'SU8' and Monitor == '091':
+        Value = (1.0912) * Value - 0.9505
+
+    if Visit == 'SU8' and Monitor == '138':
+        Value = (1.4078) * Value - 4.0839
+
+    if Visit == 'SU8' and Monitor == '731':
+        Value = (0.3191) * Value + 15.282
+
+    if Visit == 'SU8' and Monitor == '136':
+        Value = (0.2425) * Value + 21.134
+
+    if Visit == 'SU8' and Monitor == '094':
+        Value = (0.3408) * Value + 16.734
+
+    if Visit == 'SU8' and Monitor == '066':
+        Value = (0.2679) * Value + 14.68
+
+    if Visit == 'SU8' and Monitor == '097':
+        Value = (0.2942) * Value + 12.312
+
+
+# WI8 Values
+
+    if Visit == 'WI8' and Monitor == '137':
+        Value = (1) * Value + 0
+
+    if Visit == 'WI8' and Monitor == '083':
+        Value = (1.0479) * Value + 2.6149
+
+    if Visit == 'WI8' and Monitor == '091':
+        Value = (0.9695) * Value + 0.4402
+
+    if Visit == 'WI8' and Monitor == '138':
+        Value = (1.1129) * Value - 3.1571
+
+    if Visit == 'WI8' and Monitor == '136':
+        Value = (0.4229) * Value + 14.49
+
+    if Visit == 'WI8' and Monitor == '094':
+        Value = (0.4147) * Value + 10.279
+
+    if Visit == 'WI8' and Monitor == '066':
+        Value = (0.311) * Value + 11.013
+
+    if Visit == 'WI8' and Monitor == '097':
+        Value = (0.4223) * Value + 10.492
+
+    return Value
