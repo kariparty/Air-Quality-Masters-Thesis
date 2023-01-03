@@ -1,0 +1,164 @@
+CO2_Calibration.py
+
+def HUD_CO2calibration(Visit, Location, Monitor, Value):
+
+    # SU7 CO2 - CALIBRATED WITH FA7 VALUES
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '870':
+        Value = (1) * Value + 0
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '689':
+        Value = (0.9694) * Value + 66.113
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '809':
+        Value = (0.9662) * Value + 85.927
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '877':
+        Value = (0.9224) * Value + 47.114
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '095':
+        Value = (0.932) * Value + 61.819
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '810':
+        Value = (0.9002) * Value + 142.41
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '878':
+        Value = (0.8033) * Value + 169.05
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '890':
+        Value = (0.7347) * Value + 272.78
+
+    #FA7 CO2
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '870':
+        Value = (1) * Value + 0
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '689':
+        Value = (0.9694) * Value + 66.113
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '809':
+        Value = (0.9662) * Value + 85.927
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '877':
+        Value = (0.9224) * Value + 47.114
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '095':
+        Value = (0.932) * Value + 61.819
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '810':
+        Value = (0.9002) * Value + 142.41
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '878':
+        Value = (0.8033) * Value + 169.05
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '890':
+        Value = (0.7347) * Value + 272.78
+
+    # SP8 CO2
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '870':
+        Value = (1) * Value + 0
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '811':
+        Value = (1.0246) * Value + 20.898
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '809':
+        Value = (0.9331) * Value + 99.915
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '877':
+        Value = (1.0101) * Value - 43.629
+
+    if Visit == 'SP8' and Location == 'OU' and Monitor == '095':
+        Value = (0.6836) * Value + 151.67
+
+    if Visit == 'SP8' and Location == 'OU' and Monitor == '810':
+        Value = (0.6858) * Value + 188.91
+
+    if Visit == 'SP8' and Location == 'OU' and Monitor == '878':
+        Value = (0.7681) * Value + 116.85
+
+    if Visit == 'SP8' and Location == 'OU' and Monitor == '890':
+        Value = (0.8971) * Value + 79.516
+
+    # SU8 CO2
+
+    if Visit == 'SU8' and Location == 'IN' and Monitor == '870':
+        Value = (1) * Value + 0
+
+    if Visit == 'SU8' and Location == 'IN' and Monitor == '811':
+        Value = (1.0226) * Value + 17.371
+
+    if Visit == 'SU8' and Location == 'IN' and Monitor == '809':
+        Value = (1.023) * Value + 37.277
+
+    if Visit == 'SU8' and Location == 'IN' and Monitor == '877':
+        Value = (1.0078) * Value - 49.773
+
+    if Visit == 'SU8' and Location == 'OU' and Monitor == '095':
+        Value = (1.019) * Value - 22.668
+
+    if Visit == 'SU8' and Location == 'OU' and Monitor == '810':
+        Value = (0.9941) * Value + 41.114
+
+    if Visit == 'SU8' and Location == 'OU' and Monitor == '878':
+        Value = (0.9983) * Value - 3.4879
+
+    if Visit == 'SU8' and Location == 'OU' and Monitor == '890':
+        Value = (0.9908) * Value + 24.007
+
+    # WI8 CO2
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '870':
+        Value = (1) * Value + 0
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '811':
+        Value = (1.0558) * Value + 1.9384
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '809':
+        Value = (1.114) * Value + 0.2028
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '877':
+        Value = (1.1456) * Value - 111.4
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '095':
+        Value = (0.9393) * Value + 25.29
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '810':
+        Value = (0.9094) * Value + 85.214
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '878':
+        Value = (0.8581) * Value - 66.777
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '890':
+        Value = (0.9366) * Value + 51.446
+
+    # WI9 CO2
+
+    if Visit == 'WI9' and Location == 'IN' and Monitor == '870':
+        Value = (1) * Value + 0
+
+    if Visit == 'WI9' and Location == 'IN' and Monitor == '811':
+        Value = (1.0143) * Value + 30.481
+
+    if Visit == 'WI9' and Location == 'IN' and Monitor == '809':
+        Value = (1.011) * Value + 48.109
+
+    if Visit == 'WI9' and Location == 'IN' and Monitor == '877':
+        Value = (1.0228) * Value - 52.239
+
+    if Visit == 'WI9' and Location == 'OU' and Monitor == '095':
+        Value = (0.994) * Value - 4.4865
+
+    if Visit == 'WI9' and Location == 'OU' and Monitor == '810':
+        Value = (1.0154) * Value + 35.215
+
+    if Visit == 'WI9' and Location == 'OU' and Monitor == '878':
+        Value = (0.9952) * Value + 3.8032
+
+    if Visit == 'WI9' and Location == 'OU' and Monitor == '890':
+        Value = (1.0192) * Value + 14.559
+
+
+    return Value
+
+
