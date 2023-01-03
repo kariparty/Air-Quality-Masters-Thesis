@@ -1,0 +1,175 @@
+NO2_Calibration.py
+
+def HUD_NO2calibration(Visit, Monitor, Value):
+
+
+# SU7 NO2 - CALIBRATED WITH FA7 VALUES
+
+    if Visit == 'SU7' and Monitor == '001':
+        Value = (1) * Value + 0
+
+    if Visit == 'SU7' and Monitor == '002':
+        Value = (0.9716) * Value + 0.0197
+
+    if Visit == 'SU7' and Monitor == '003':
+        Value = (0.9907) * Value - 0.0252
+
+    if Visit == 'SU7' and Monitor == '012':
+        Value = (1.193) * Value - 0.0313
+
+    if Visit == 'SU7' and Monitor == '013':
+        Value = (1.1873) * Value - 0.0498
+
+    if Visit == 'SU7' and Monitor == '014':
+        Value = (0.972) * Value - 0.0385
+
+    if Visit == 'SU7' and Monitor == '015':
+        Value = (0.9811) * Value + 0.0319
+
+    if Visit == 'SU7' and Monitor == '029':
+        Value = (1.2361) * Value - 0.016
+
+
+# FA7 NO2
+
+    if Visit == 'FA7' and Monitor == '001':
+        Value = (1) * Value + 0
+
+    if Visit == 'FA7' and Monitor == '002':
+        Value = (0.9716) * Value + 0.0197
+
+    if Visit == 'FA7' and Monitor == '003':
+        Value = (0.9907) * Value - 0.0252
+
+    if Visit == 'FA7' and Monitor == '012':
+        Value = (1.193) * Value - 0.0313
+
+    if Visit == 'FA7' and Monitor == '013':
+        Value = (1.1873) * Value - 0.0498
+
+    if Visit == 'FA7' and Monitor == '014':
+        Value = (0.972) * Value - 0.0385
+
+    if Visit == 'FA7' and Monitor == '015':
+        Value = (0.9811) * Value + 0.0319
+
+    if Visit == 'FA7' and Monitor == '029':
+        Value = (1.2361) * Value - 0.016
+
+
+# SP8 NO2
+
+    if Visit == 'SP8' and Monitor == '001':
+        Value = (1) * Value + 0
+
+    if Visit == 'SP8' and Monitor == '002':
+        Value = (0.9684) * Value + 0.0322
+
+    if Visit == 'SP8' and Monitor == '003':
+        Value = (0.9968) * Value - 0.0166
+
+    if Visit == 'SP8' and Monitor == '012':
+        Value = (1.5462) * Value - 0.0669
+
+    if Visit == 'SP8' and Monitor == '013':
+        Value = (1.5091) * Value - 0.068
+
+    if Visit == 'SP8' and Monitor == '014':
+        Value = (1.006) * Value - 0.0387
+
+    if Visit == 'SP8' and Monitor == '015':
+        Value = (1.3086) * Value + 0.0387
+
+    if Visit == 'SP8' and Monitor == '016':
+        Value = (0.9146) * Value + 0.0314
+
+    if Visit == 'SP8' and Monitor == '029':
+        Value = (1.4494) * Value - 0.0263
+
+# SU8 NO2
+
+    if Visit == 'SU8' and Monitor == '001':
+        Value = (1) * Value + 0
+
+    if Visit == 'SU8' and Monitor == '002':
+        Value = (1.0674) * Value + 0.0219
+
+    if Visit == 'SU8' and Monitor == '003':
+        Value = (1.0859) * Value - 0.0309
+
+    if Visit == 'SU8' and Monitor == '012':
+        Value = (1.5994) * Value - 0.058
+
+    if Visit == 'SU8' and Monitor == '014':
+        Value = (1.0888) * Value - 0.0398
+
+    if Visit == 'SU8' and Monitor == '015':
+        Value = (1.303) * Value + 0.0344
+
+    if Visit == 'SU8' and Monitor == '016':
+        Value = (1.0784) * Value + 0.0179
+
+    if Visit == 'SU8' and Monitor == '027':
+        Value = (0.9397) * Value + 0.0329
+
+    if Visit == 'SU8' and Monitor == '029':
+        Value = (1.4379) * Value - 0.0295
+
+
+# WI8 NO2
+
+    if Visit == 'WI8' and Monitor == '001':
+        Value = (1) * Value + 0
+
+    if Visit == 'WI8' and Monitor == '002':
+        Value = (0.9904) * Value + 0.0365
+
+    if Visit == 'WI8' and Monitor == '003':
+        Value = (1.1525) * Value - 0.0229
+
+    if Visit == 'WI8' and Monitor == '012':
+        Value = (1.3695) * Value + 0.0039
+
+    if Visit == 'WI8' and Monitor == '013':
+        Value = (1.3692) * Value - 0.0354
+
+    if Visit == 'WI8' and Monitor == '014':
+        Value = (1.0121) * Value - 0.04
+
+    if Visit == 'WI8' and Monitor == '015':
+        Value = (1.2801) * Value + 0.0518
+
+    if Visit == 'WI8' and Monitor == '016':
+        Value = (0.7976) * Value + 0.0094
+
+    if Visit == 'WI8' and Monitor == '029':
+        Value = (1.3556) * Value - 0.0288
+
+
+# WI9 NO2
+
+    if Visit == 'WI9' and Monitor == '001':
+        Value = (1) * Value + 0
+
+    if Visit == 'WI9' and Monitor == '002':
+        Value = (0.9274) * Value + 0.0264
+
+    if Visit == 'WI9' and Monitor == '003':
+        Value = (0.9169) * Value - 0.0247
+
+    if Visit == 'WI9' and Monitor == '012':
+        Value = (0.8404) * Value + 0.0019
+
+    if Visit == 'WI9' and Monitor == '014':
+        Value = (0.5726) * Value + 0.0106
+
+    if Visit == 'WI9' and Monitor == '015':
+        Value = (1.1078) * Value + 0.0442
+
+    if Visit == 'WI9' and Monitor == '027':
+        Value = (0.8479) * Value + 0.0175
+
+    if Visit == 'WI9' and Monitor == '029':
+        Value = (1.2064) * Value + 0.0096
+
+    return Value
