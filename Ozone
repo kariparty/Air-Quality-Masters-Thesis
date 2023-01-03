@@ -1,0 +1,86 @@
+O3_loop.py
+import glob
+import pandas as pd
+import os
+
+# 1 - Insert "masterpath" folder location (ie folder where all files are kept)
+# 2 - Insert specific files attribute under "files" (ie *PM_OU_*, *CO_IN_*, etc)
+# 3 - At bottom of code, insert where you would like the csv files to be saved
+
+masterpath = 'C:\\Users\\Kari\\Desktop\\HUD_Data_Dump\\AllFiles\\'
+
+files = [f for f in glob.glob(masterpath + "*O3_IN_*.csv", recursive=True)]
+loopO3 = pd.DataFrame()
+rawO3 = pd.DataFrame()
+OneMinO3 = pd.DataFrame()
+
+A = 1
+
+for f in files:
+    # paste file path for CO2 file, inside or outside, in the quotations below
+
+    path = f
+    file = (os.path.basename(path))
+    columnsTitles = ['DateTime', 'HouseNumber', 'Visit', 'Test', 'Location', 'Monitor', 'Variable', 'Unit', 'Value']
+
+    # O3
+
+    loopO3 = pd.read_csv(path, header=[1])
+
+    loopO3.rename(columns={loopO3.columns[1]: 'DateTime'}, inplace=True)
+
+    loopO3['Date'] = pd.to_datetime(loopO3['DateTime']).dt.date.astype('str')
+    loopO3['Time'] = pd.to_datetime(loopO3['DateTime']).dt.time.astype('str')
+
+    loopO3['DateTime'] = pd.to_datetime(loopO3['Date'] + ' ' + loopO3['Time'])
+
+    # naming the value column, as column location changes in different files
+    names = list(loopO3)
+    for n in names:
+        if 'O3' in str(n):
+            loopO3['Value'] = loopO3[n]
+
+    # additional columns are added based on file basename
+
+    loopO3['HouseNumber'] = file.split('_')[0]
+    loopO3['Visit'] = file.split('_')[1]
+    loopO3['Test'] = file.split('_')[2]
+    loopO3['Location'] = file.split('_')[3]
+    loopO3['Monitor'] = file.split('_')[4]
+    loopO3['Variable'] = 'O3'
+    loopO3['Unit'] = 'ppb'
+
+    # columns are reordered based on column titles as originally defined. This will discard any columns not listed in columnsTitles
+
+    loopO3 = loopO3.reindex(columns=columnsTitles)
+    loopO3.set_index('DateTime', inplace=True)
+
+    # calibrate values
+
+    visit = file.split('_')[1]
+    monitor = file.split('_')[4]
+    value = loopO3['Value']
+
+    CalibO3 = loopO3.copy()
+
+    from O3_Calibration import HUD_O3calibration
+
+    CalibValues = HUD_O3calibration(visit, monitor, value)
+
+    CalibO3['Value'] = CalibValues
+
+    CalibO3.loc[CalibO3['Value'] < 0, 'Value'] = 0
+
+    if A == 1:
+        rawO3 = loopO3
+        OneMinO3 = CalibO3
+
+    if A > 1:
+        rawO3 = pd.concat([loopO3, rawO3])
+        OneMinO3 = pd.concat([CalibO3, OneMinO3])
+
+    A = A + 1
+    print(f)
+#
+rawO3.to_csv(r'C:\Users\Kari\Desktop\HUD_Data_Dump\ProcessedFiles\O3_IN_RAW.csv')
+OneMinO3.to_csv(r'C:\Users\Kari\Desktop\HUD_Data_Dump\ProcessedFiles\O3_IN_1min.csv')
