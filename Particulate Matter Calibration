@@ -1,0 +1,419 @@
+PM_Calibration.py
+
+def HUD_PMcalibration(Visit, Location, Variable, Monitor, Value):
+    # Only size 1-4 calibrated
+
+    # SU7 PM Size 1 - CALIBRATED WITH FA7 VALUES
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '346' and Variable == 'Size1':
+        Value = (0.8469) * Value + 250.9
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '687' and Variable == 'Size1':
+        Value = (0.9571) * Value + 256.39
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '689' and Variable == 'Size1':
+        Value = (0.9584) * Value - 60.554
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '690' and Variable == 'Size1':
+        Value = (1) * Value + 0
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '344' and Variable == 'Size1':
+        Value = (1.2353) * Value - 104.13
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '345' and Variable == 'Size1':
+        Value = (1.1861) * Value + 497.09
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '688' and Variable == 'Size1':
+        Value = (1.1508) * Value + 306.37
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '343' and Variable == 'Size1':
+        Value = (1.0711) * Value + 130.47
+
+
+    # FA7 PM Size 1
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '346' and Variable == 'Size1':
+        Value = (0.8469) * Value + 250.9
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '687' and Variable == 'Size1':
+        Value = (0.9571) * Value + 256.39
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '689' and Variable == 'Size1':
+        Value = (0.9584) * Value - 60.554
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '690' and Variable == 'Size1':
+        Value = (1) * Value + 0
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '344' and Variable == 'Size1':
+        Value = (1.2353) * Value - 104.13
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '345' and Variable == 'Size1':
+        Value = (1.1861) * Value + 497.09
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '688' and Variable == 'Size1':
+        Value = (1.1508) * Value + 306.37
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '343' and Variable == 'Size1':
+        Value = (1.0711) * Value + 130.47
+
+
+    # SU7 PM Size 2 - CALIBRATED WITH FA7 VALUES
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '346' and Variable == 'Size2':
+        Value = (0.8812) * Value + 5.7654
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '687' and Variable == 'Size2':
+        Value = (0.9704) * Value + 10.462
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '689' and Variable == 'Size2':
+        Value = (1.0346) * Value - 18.784
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '690' and Variable == 'Size2':
+        Value = (1) * Value + 0
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '344' and Variable == 'Size2':
+        Value = (1.1699) * Value + 22.182
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '345' and Variable == 'Size2':
+        Value = (1.1397) * Value + 32.15
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '688' and Variable == 'Size2':
+        Value = (1.1117) * Value - 0.2688
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '343' and Variable == 'Size2':
+        Value = (1.0909) * Value + 2.7322
+
+
+    # FA7 PM Size 2
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '346' and Variable == 'Size2':
+        Value = (0.8812) * Value + 5.7654
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '687' and Variable == 'Size2':
+        Value = (0.9704) * Value + 10.462
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '689' and Variable == 'Size2':
+        Value = (1.0346) * Value - 18.784
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '690' and Variable == 'Size2':
+        Value = (1) * Value + 0
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '344' and Variable == 'Size2':
+        Value = (1.1699) * Value + 22.182
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '345' and Variable == 'Size2':
+        Value = (1.1397) * Value + 32.15
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '688' and Variable == 'Size2':
+        Value = (1.1117) * Value - 0.2688
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '343' and Variable == 'Size2':
+        Value = (1.0909) * Value + 2.7322
+
+
+    # SU7 PM Size 3 - CALIBRATED WITH FA7 VALUES
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '346' and Variable == 'Size3':
+        Value = (1.0177) * Value + 10.673
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '687' and Variable == 'Size3':
+        Value = (0.972) * Value + 3.6031
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '689' and Variable == 'Size3':
+        Value = (1.0061) * Value + 1.4436
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '690' and Variable == 'Size3':
+        Value = (1) * Value + 0
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '344' and Variable == 'Size3':
+        Value = (1.5132) * Value + 15.155
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '345' and Variable == 'Size3':
+        Value = (1.2875) * Value + 8.8814
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '688' and Variable == 'Size3':
+        Value = (1.165) * Value + 2.78
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '343' and Variable == 'Size3':
+        Value = (1.2544) * Value + 5.152
+
+
+    # FA7 PM Size 3 - CALIBRATED WITH FA7 VALUES
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '346' and Variable == 'Size3':
+        Value = (1.0177) * Value + 10.673
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '687' and Variable == 'Size3':
+        Value = (0.972) * Value + 3.6031
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '689' and Variable == 'Size3':
+        Value = (1.0061) * Value + 1.4436
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '690' and Variable == 'Size3':
+        Value = (1) * Value + 0
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '344' and Variable == 'Size3':
+        Value = (1.5132) * Value + 15.155
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '345' and Variable == 'Size3':
+        Value = (1.2875) * Value + 8.8814
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '688' and Variable == 'Size3':
+        Value = (1.165) * Value + 2.78
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '343' and Variable == 'Size3':
+        Value = (1.2544) * Value + 5.152
+
+
+    # SU7 PM Size 4 - CALIBRATED WITH FA7 VALUES
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '346' and Variable == 'Size4':
+        Value = (0.9863) * Value + 2.6422
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '687' and Variable == 'Size4':
+        Value = (0.9735) * Value - 1.3828
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '689' and Variable == 'Size4':
+        Value = (1.0153) * Value - 3.5031
+
+    if Visit == 'SU7' and Location == 'IN' and Monitor == '690' and Variable == 'Size4':
+        Value = (1) * Value + 0
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '344' and Variable == 'Size4':
+        Value = (1.4513) * Value + 1.6119
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '345' and Variable == 'Size4':
+        Value = (1.4421) * Value - 1.8318
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '688' and Variable == 'Size4':
+        Value = (1.2614) * Value - 2.4536
+
+    if Visit == 'SU7' and Location == 'OU' and Monitor == '343' and Variable == 'Size4':
+        Value = (1.3181) * Value - 2.0041
+
+    # FA7 PM Size 4
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '346' and Variable == 'Size4':
+        Value = (0.9863) * Value + 2.6422
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '687' and Variable == 'Size4':
+        Value = (0.9735) * Value - 1.3828
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '689' and Variable == 'Size4':
+        Value = (1.0153) * Value - 3.5031
+
+    if Visit == 'FA7' and Location == 'IN' and Monitor == '690' and Variable == 'Size4':
+        Value = (1) * Value + 0
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '344' and Variable == 'Size4':
+        Value = (1.4513) * Value + 1.6119
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '345' and Variable == 'Size4':
+        Value = (1.4421) * Value - 1.8318
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '688' and Variable == 'Size4':
+        Value = (1.2614) * Value - 2.4536
+
+    if Visit == 'FA7' and Location == 'OU' and Monitor == '343' and Variable == 'Size4':
+        Value = (1.3181) * Value - 2.0041
+
+
+    # WI8 PM Size 1
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '346' and Variable == 'Size1':
+        Value = (0.9099) * Value - 697.98
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '687' and Variable == 'Size1':
+        Value = (0.9126) * Value - 591.55
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '689' and Variable == 'Size1':
+        Value = (0.9545) * Value - 453.58
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '690' and Variable == 'Size1':
+        Value = (1) * Value + 0
+
+    # 343 has low R value for this size
+    # if Visit == 'WI8' and Location == 'OU' and Monitor == '343' and Variable == 'Size1':
+    #     Value = (1.2353) * Value - 104.13
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '345' and Variable == 'Size1':
+        Value = (1.2086) * Value - 528.13
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '686' and Variable == 'Size1':
+        Value = (1.1299) * Value - 722.48
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '688' and Variable == 'Size1':
+        Value = (1.1647) * Value - 802.92
+
+
+    # WI8 PM Size 2
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '346' and Variable == 'Size2':
+        Value = (0.8028) * Value + 218.2
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '687' and Variable == 'Size2':
+        Value = (0.8289) * Value + 176.42
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '689' and Variable == 'Size2':
+        Value = (0.9333) * Value + 56.448
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '690' and Variable == 'Size2':
+        Value = (1) * Value + 0
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '343' and Variable == 'Size2':
+        Value = (0.8582) * Value + 253.14
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '345' and Variable == 'Size2':
+        Value = (1.035) * Value + 218.44
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '686' and Variable == 'Size2':
+        Value = (0.9048) * Value + 181.95
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '688' and Variable == 'Size2':
+        Value = (1.0216) * Value + 80.243
+
+
+    # WI8 PM Size 3
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '346' and Variable == 'Size3':
+        Value = (0.9894) * Value + 64.058
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '687' and Variable == 'Size3':
+        Value = (0.8777) * Value + 61.146
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '689' and Variable == 'Size3':
+        Value = (0.9496) * Value + 38.395
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '690' and Variable == 'Size3':
+        Value = (1) * Value + 0
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '343' and Variable == 'Size3':
+        Value = (1.2235) * Value + 50.625
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '345' and Variable == 'Size3':
+        Value = (1.313) * Value + 51.676
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '686' and Variable == 'Size3':
+        Value = (1.0664) * Value + 63.32
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '688' and Variable == 'Size3':
+        Value = (1.1763) * Value + 42.31
+
+    # WI8 PM Size 4
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '346' and Variable == 'Size4':
+        Value = (1.2533) * Value + 6.8587
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '687' and Variable == 'Size4':
+        Value = (1.0106) * Value + 5.6292
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '689' and Variable == 'Size4':
+        Value = (1.0326) * Value + 4.5287
+
+    if Visit == 'WI8' and Location == 'IN' and Monitor == '690' and Variable == 'Size4':
+        Value = (1) * Value + 0
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '343' and Variable == 'Size4':
+        Value = (1.4423) * Value + 1.9509
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '345' and Variable == 'Size4':
+        Value = (1.6308) * Value + 3.1273
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '686' and Variable == 'Size4':
+        Value = (1.1811) * Value + 4.8759
+
+    if Visit == 'WI8' and Location == 'OU' and Monitor == '688' and Variable == 'Size4':
+        Value = (1.4326) * Value + 2.3494
+
+
+ #    SP 8 Size1
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '346' and Variable == 'Size1':
+        Value = (0.4849) * Value - 86.629
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '686' and Variable == 'Size1':
+        Value = (0.5387) * Value - 420.04
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '687' and Variable == 'Size1':
+        Value = (0.4993) * Value - 367.57
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '689' and Variable == 'Size1':
+        Value = (0.5677) * Value - 204.16
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '690' and Variable == 'Size1':
+        Value = (1) * Value + 0
+
+    if Visit == 'SP8' and Location == 'OU' and Monitor == '344' and Variable == 'Size1':
+        Value = (0.6295) * Value - 149.06
+
+    if Visit == 'SP8' and Location == 'OU' and Monitor == '345' and Variable == 'Size1':
+        Value = (0.5945) * Value - 203.98
+
+    if Visit == 'SP8' and Location == 'OU' and Monitor == '688' and Variable == 'Size1':
+        Value = (0.5662) * Value - 46.06
+
+    if Visit == 'SP8' and Location == 'OU' and Monitor == '343' and Variable == 'Size1':
+        Value = (0.4539) * Value - 101.94
+
+    # Size 2 has bad calibration vales
+
+    #    SP 8 Size3
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '346' and Variable == 'Size3':
+        Value = (0.6986) * Value + 19.265
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '686' and Variable == 'Size3':
+        Value = (1.0236) * Value + 11.347
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '687' and Variable == 'Size3':
+        Value = (1.0174) * Value + 12.861
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '689' and Variable == 'Size3':
+        Value = (0.6749) * Value + 21.085
+
+    if Visit == 'SP8' and Location == 'IN' and Monitor == '690' and Variable == 'Size3':
+        Value = (1) * Value + 0
+
+    if Visit == 'SP8' and Location == 'OU' and Monitor == '344' and Variable == 'Size3':
+        Value = (1.3792) * Value + 12.415
+
+    if Visit == 'SP8' and Location == 'OU' and Monitor == '345' and Variable == 'Size3':
+        Value = (1.5757) * Value + 5.7298
+
+    if Visit == 'SP8' and Location == 'OU' and Monitor == '688' and Variable == 'Size3':
+        Value = (1.0953) * Value + 15.262
+
+    if Visit == 'SP8' and Location == 'OU' and Monitor == '343' and Variable == 'Size3':
+        Value = (1.2352) * Value + 11.157
+
+        # SP8 Size 4 had bad calibration values
+
+
+#    SU8 Size1
+#     Only size 1 for this calibration period has good values
+
+    if Visit == 'SU8' and Location == 'IN' and Monitor == '346' and Variable == 'Size1':
+        Value = (0.7186) * Value - 5141.9
+
+    if Visit == 'SU8' and Location == 'IN' and Monitor == '687' and Variable == 'Size1':
+        Value = (1.0319) * Value - 23376
+
+    if Visit == 'SU8' and Location == 'IN' and Monitor == '689' and Variable == 'Size1':
+        Value = (0.8515) * Value - 3566.7
+
+    if Visit == 'SU8' and Location == 'IN' and Monitor == '690' and Variable == 'Size1':
+        Value = (1) * Value + 0
+
+    if Visit == 'SU8' and Location == 'OU' and Monitor == '344' and Variable == 'Size1':
+        Value = (1.4668) * Value - 27105
+
+    if Visit == 'SU8' and Location == 'OU' and Monitor == '345' and Variable == 'Size1':
+        Value = (1.5144) * Value - 27972
+
+    if Visit == 'SU8' and Location == 'OU' and Monitor == '688' and Variable == 'Size1':
+        Value = (1.3875) * Value - 26828
+
+    if Visit == 'SU8' and Location == 'OU' and Monitor == '343' and Variable == 'Size1':
+        Value = (2.3649) * Value - 35664
+
+    return Value
