@@ -1,0 +1,107 @@
+import glob
+import pandas as pd
+import os
+
+# 1 - Insert "masterpath" folder location (ie folder where all files are kept)
+# 2 - Insert specific files attribute under "files" (ie *PM_OU_*, *CO_IN_*, etc)
+# 3 - At bottom of code, insert where you would like the csv files to be saved
+
+masterpath = 'C:\\Users\\Kari\\Desktop\\HUD_Data_Dump\\AllFiles\\'
+
+files = [f for f in glob.glob(masterpath + "*TRH_IN_*.csv", recursive=True)]
+loopTRH = pd.DataFrame()
+rawTRH = pd.DataFrame()
+OneMinTRH = pd.DataFrame()
+
+A = 1
+
+for f in files:
+
+    path = f
+    file = (os.path.basename(path))
+    columnsTitles = ['DateTime', 'HouseNumber', 'Visit', 'Test', 'Location', 'Monitor', 'Variable', 'Unit', 'Value']
+
+    df1 = pd.read_csv(path, header=[1])
+
+    df1.rename(columns={df1.columns[1]: 'DateTime'}, inplace=True)
+
+    df1['Date'] = pd.to_datetime(df1['DateTime']).dt.date.astype('str')
+    df1['Time'] = pd.to_datetime(df1['DateTime']).dt.time.astype('str')
+
+    df1['DateTime'] = pd.to_datetime(df1['Date'] + ' ' + df1['Time'])
+
+    df1.rename(columns={df1.columns[3]: 'Value'}, inplace=True)
+
+    df1['HouseNumber'] = file.split('_')[0]
+
+    df1['Visit'] = file.split('_')[1]
+
+    df1['Test'] = file.split('_')[2]
+
+    df1['Location'] = file.split('_')[3]
+
+    df1['Monitor'] = file.split('_')[4]
+
+    df1['Variable'] = 'RH'
+
+    df1['Unit'] = '%RH'
+
+    df1 = df1.reindex(columns=columnsTitles)
+
+    # Temp
+
+    df2 = pd.read_csv(path, header=[1])
+
+    df2.rename(columns={df2.columns[1]: 'DateTime'}, inplace=True)
+
+    df2['Date'] = pd.to_datetime(df2['DateTime']).dt.date.astype('str')
+    df2['Time'] = pd.to_datetime(df2['DateTime']).dt.time.astype('str')
+
+    df2['DateTime'] = pd.to_datetime(df2['Date'] + ' ' + df2['Time'])
+
+    df2.rename(columns={df2.columns[2]: 'Value'}, inplace=True)
+
+    df2['HouseNumber'] = file.split('_')[0]
+
+    df2['Visit'] = file.split('_')[1]
+
+    df2['Test'] = file.split('_')[2]
+
+    df2['Location'] = file.split('_')[3]
+
+    df2['Monitor'] = file.split('_')[4]
+
+    df2['Variable'] = 'Temp'
+
+    df2['Unit'] = 'DegC'
+
+    df2 = df2.reindex(columns=columnsTitles)
+
+    # combine dfs
+
+    frames = [df1, df2]
+
+    # result is what will be exported to database
+
+    loopTRH = pd.concat(frames)
+
+    loopTRH.set_index('DateTime', inplace=True)
+
+    # TRH is not calibrated
+    # already at one minute intervals
+
+    OneMinLoopTRH = loopTRH
+
+    if A == 1:
+        rawTRH = loopTRH
+        OneMinTRH = OneMinLoopTRH
+
+    if A > 1:
+        rawTRH = pd.concat([loopTRH, rawTRH])
+        OneMinTRH = pd.concat([OneMinLoopTRH, OneMinTRH])
+
+    A = A + 1
+    print(f)
+
+rawTRH.to_csv(r'C:\Users\Kari\Desktop\HUD_Data_Dump\ProcessedFiles\TRH_IN_RAW.csv')
+OneMinTRH.to_csv(r'C:\Users\Kari\Desktop\HUD_Data_Dump\ProcessedFiles\TRH_IN_1min.csv')
