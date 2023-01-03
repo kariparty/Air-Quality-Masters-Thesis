@@ -1,0 +1,412 @@
+PM_loop.py
+import glob
+import pandas as pd
+import os
+
+# 1 - Insert "masterpath" folder location (ie folder where all files are kept)
+# 2 - Insert specific files attribute under "files" (ie *PM_OU_*, *CO_IN_*, etc)
+# 3 - At bottom of code, insert where you would like the csv files to be saved
+
+
+masterpath = 'C:\\Users\\Kari\\Desktop\\HUD_Data_Dump\\AllFiles\\'
+
+files = [f for f in glob.glob(masterpath + "*PM_OU_*.csv", recursive=True)]
+loopPM = pd.DataFrame()
+rawPM = pd.DataFrame()
+OneMinPM = pd.DataFrame()
+
+A = 1
+
+for f in files:
+
+    path = f
+    file = (os.path.basename(path))
+    columnsTitles = ['DateTime', 'HouseNumber', 'Visit', 'Test', 'Location', 'Monitor', 'Variable', 'Unit', 'Value']
+
+    # column values
+    visit = file.split('_')[1]
+    location = file.split('_')[3]
+    monitor = file.split('_')[4]
+    housenumber = file.split('_')[0]
+    test = file.split('_')[2]
+
+    # Size1
+
+    df1 = pd.read_csv(path, header=[0])
+
+    df1.rename(columns={df1.columns[0]: 'DateTime'}, inplace=True)
+
+    df1['Date'] = pd.to_datetime(df1['DateTime']).dt.date.astype('str')
+    df1['Time'] = pd.to_datetime(df1['DateTime']).dt.time.astype('str')
+
+    df1['DateTime'] = pd.to_datetime(df1['Date'] + ' ' + df1['Time'])
+
+    df1.rename(columns={df1.columns[2]: 'Value'}, inplace=True)
+
+    df1['HouseNumber'] = housenumber
+    df1['Visit'] = visit
+    df1['Test'] = test
+    df1['Location'] = location
+    df1['Monitor'] = monitor
+    df1['Variable'] = 'Size 0.3'
+    df1['Unit'] = 'd/L'
+
+    df1 = df1.reindex(columns=columnsTitles)
+
+    df1.set_index('DateTime', inplace=True)
+
+    #  df1 Calibration
+
+    variable1 = 'Size 0.3'
+    value1 = df1['Value']
+
+    CalibPM1 = df1.copy()
+
+    from PM_Calibration import HUD_PMcalibration
+
+    CalibValues = HUD_PMcalibration(visit, location, variable1, monitor, value1)
+    #
+    CalibPM1['Value'] = CalibValues
+
+    #  df1 One Minute Data from Calibration Values
+
+    Interdf1 = (CalibPM1.resample("1T").mean())
+    OneMindf1 = Interdf1.interpolate()
+
+    OneMindf1['DateTime'] = pd.to_datetime(OneMindf1.index)
+
+    OneMindf1['Date'] = pd.to_datetime(OneMindf1['DateTime']).dt.date
+    OneMindf1['Time'] = pd.to_datetime(OneMindf1['DateTime']).dt.time
+
+    OneMindf1['HouseNumber'] = housenumber
+    OneMindf1['Visit'] = visit
+    OneMindf1['Test'] = test
+    OneMindf1['Location'] = location
+    OneMindf1['Monitor'] = monitor
+    OneMindf1['Variable'] = 'Size 0.3'
+    OneMindf1['Unit'] = 'ug/m3'
+
+    OneMindf1 = OneMindf1.reindex(columns=columnsTitles)
+
+    OneMindf1.set_index('DateTime', inplace=True)
+
+    # Size2
+
+    df2 = pd.read_csv(path, header=[0])
+
+    df2.rename(columns={df2.columns[0]: 'DateTime'}, inplace=True)
+
+    df2['Date'] = pd.to_datetime(df2['DateTime']).dt.date.astype('str')
+    df2['Time'] = pd.to_datetime(df2['DateTime']).dt.time.astype('str')
+
+    df2['DateTime'] = pd.to_datetime(df2['Date'] + ' ' + df2['Time'])
+
+    df2.rename(columns={df2.columns[4]: 'Value'}, inplace=True)
+
+    df2['HouseNumber'] = housenumber
+    df2['Visit'] = visit
+    df2['Test'] = test
+    df2['Location'] = location
+    df2['Monitor'] = monitor
+    df2['Variable'] = 'Size 0.5'
+    df2['Unit'] = 'd/L'
+
+    df2 = df2.reindex(columns=columnsTitles)
+
+    df2.set_index('DateTime', inplace=True)
+
+    #  df2 Calibration
+
+    variable2 = 'Size 0.5'
+    value2 = df2['Value']
+
+    CalibPM2 = df2.copy()
+
+    from PM_Calibration import HUD_PMcalibration
+
+    CalibValues = HUD_PMcalibration(visit, location, variable2, monitor, value2)
+
+    CalibPM2['Value'] = CalibValues
+
+    #  df2 One Minute Data
+
+    Interdf2 = (CalibPM2.resample("1T").mean())
+    OneMindf2 = Interdf2.interpolate()
+
+    OneMindf2['DateTime'] = pd.to_datetime(OneMindf2.index)
+
+    OneMindf2['Date'] = pd.to_datetime(OneMindf2['DateTime']).dt.date
+    OneMindf2['Time'] = pd.to_datetime(OneMindf2['DateTime']).dt.time
+
+    OneMindf2['HouseNumber'] = housenumber
+    OneMindf2['Visit'] = visit
+    OneMindf2['Test'] = test
+    OneMindf2['Location'] = location
+    OneMindf2['Monitor'] = monitor
+    OneMindf2['Variable'] = 'Size 0.5'
+    OneMindf2['Unit'] = 'ug/m3'
+
+    OneMindf2 = OneMindf2.reindex(columns=columnsTitles)
+
+    OneMindf2.set_index('DateTime', inplace=True)
+
+    # Size3
+
+    df3 = pd.read_csv(path, header=[0])
+
+    df3.rename(columns={df3.columns[0]: 'DateTime'}, inplace=True)
+
+    df3['Date'] = pd.to_datetime(df3['DateTime']).dt.date.astype('str')
+    df3['Time'] = pd.to_datetime(df3['DateTime']).dt.time.astype('str')
+
+    df3['DateTime'] = pd.to_datetime(df3['Date'] + ' ' + df3['Time'])
+
+    df3.rename(columns={df3.columns[6]: 'Value'}, inplace=True)
+
+    df3['HouseNumber'] = housenumber
+    df3['Visit'] = visit
+    df3['Test'] = test
+    df3['Location'] = location
+    df3['Monitor'] = monitor
+    df3['Variable'] = 'Size 1.0'
+    df3['Unit'] = 'd/L'
+
+    df3 = df3.reindex(columns=columnsTitles)
+
+    df3.set_index('DateTime', inplace=True)
+
+    #  df3 Calibration
+
+    variable3 = 'Size 1.0'
+    value3 = df3['Value']
+
+    CalibPM3 = df3.copy()
+
+    from PM_Calibration import HUD_PMcalibration
+
+    CalibValues = HUD_PMcalibration(visit, location, variable3, monitor, value3)
+
+    CalibPM3['Value'] = CalibValues
+
+    #  df3 One Minute Data with Calibrated Values
+
+    Interdf3 = (CalibPM3.resample("1T").mean())
+    OneMindf3 = Interdf3.interpolate()
+
+    OneMindf3['DateTime'] = pd.to_datetime(OneMindf3.index)
+
+    OneMindf3['Date'] = pd.to_datetime(OneMindf3['DateTime']).dt.date
+    OneMindf3['Time'] = pd.to_datetime(OneMindf3['DateTime']).dt.time
+
+    OneMindf3['HouseNumber'] = housenumber
+    OneMindf3['Visit'] = visit
+    OneMindf3['Test'] = test
+    OneMindf3['Location'] = location
+    OneMindf3['Monitor'] = monitor
+    OneMindf3['Variable'] = 'Size 1.0'
+    OneMindf3['Unit'] = 'ug/m3'
+
+    OneMindf3 = OneMindf3.reindex(columns=columnsTitles)
+
+    OneMindf3.set_index('DateTime', inplace=True)
+
+    # Size4
+
+    df4 = pd.read_csv(path, header=[0])
+
+    df4.rename(columns={df4.columns[0]: 'DateTime'}, inplace=True)
+
+    df4['Date'] = pd.to_datetime(df4['DateTime']).dt.date.astype('str')
+    df4['Time'] = pd.to_datetime(df4['DateTime']).dt.time.astype('str')
+
+    df4['DateTime'] = pd.to_datetime(df4['Date'] + ' ' + df4['Time'])
+
+    df4.rename(columns={df4.columns[8]: 'Value'}, inplace=True)
+
+    df4['HouseNumber'] = housenumber
+    df4['Visit'] = visit
+    df4['Test'] = test
+    df4['Location'] = location
+    df4['Monitor'] = monitor
+    df4['Variable'] = 'Size 2.5'
+    df4['Unit'] = 'd/L'
+
+    df4 = df4.reindex(columns=columnsTitles)
+
+    df4.set_index('DateTime', inplace=True)
+
+    #  df4 Calibration
+
+    variable4 = 'Size 2.5'
+    value4 = df4['Value']
+
+    CalibPM4 = df4.copy()
+
+    from PM_Calibration import HUD_PMcalibration
+
+    CalibValues = HUD_PMcalibration(visit, location, variable4, monitor, value4)
+
+    CalibPM4['Value'] = CalibValues
+
+    #  df4 One Minute Data with calibrated values
+
+    Interdf4 = (CalibPM4.resample("1T").mean())
+    OneMindf4 = Interdf4.interpolate()
+
+    OneMindf4['DateTime'] = pd.to_datetime(OneMindf4.index)
+
+    OneMindf4['Date'] = pd.to_datetime(OneMindf4['DateTime']).dt.date
+    OneMindf4['Time'] = pd.to_datetime(OneMindf4['DateTime']).dt.time
+
+    OneMindf4['HouseNumber'] = housenumber
+    OneMindf4['Visit'] = visit
+    OneMindf4['Test'] = test
+    OneMindf4['Location'] = location
+    OneMindf4['Monitor'] = monitor
+    OneMindf4['Variable'] = 'Size 2.5'
+    OneMindf4['Unit'] = 'ug/m3'
+
+    OneMindf4 = OneMindf4.reindex(columns=columnsTitles)
+
+    OneMindf4.set_index('DateTime', inplace=True)
+
+    # Size5
+
+    df5 = pd.read_csv(path, header=[0])
+
+    df5.rename(columns={df5.columns[0]: 'DateTime'}, inplace=True)
+
+    df5['Date'] = pd.to_datetime(df5['DateTime']).dt.date.astype('str')
+    df5['Time'] = pd.to_datetime(df5['DateTime']).dt.time.astype('str')
+
+    df5['DateTime'] = pd.to_datetime(df5['Date'] + ' ' + df5['Time'])
+
+    df5.rename(columns={df5.columns[10]: 'Value'}, inplace=True)
+
+    df5['HouseNumber'] = housenumber
+    df5['Visit'] = visit
+    df5['Test'] = test
+    df5['Location'] = location
+    df5['Monitor'] = monitor
+    df5['Variable'] = 'Size 5.0'
+    df5['Unit'] = 'd/L'
+
+    df5 = df5.reindex(columns=columnsTitles)
+
+    df5.set_index('DateTime', inplace=True)
+
+    #  df5 One Minute Data
+
+    Interdf5 = (df5.resample("1T").mean())
+    OneMindf5 = Interdf5.interpolate()
+
+    OneMindf5['DateTime'] = pd.to_datetime(OneMindf5.index)
+
+    OneMindf5['Date'] = pd.to_datetime(OneMindf5['DateTime']).dt.date
+    OneMindf5['Time'] = pd.to_datetime(OneMindf5['DateTime']).dt.time
+
+    OneMindf5['HouseNumber'] = housenumber
+    OneMindf5['Visit'] = visit
+    OneMindf5['Test'] = test
+    OneMindf5['Location'] = location
+    OneMindf5['Monitor'] = monitor
+    OneMindf5['Variable'] = 'Size 5.0'
+    OneMindf5['Unit'] = 'ug/m3'
+
+    OneMindf5 = OneMindf5.reindex(columns=columnsTitles)
+
+    OneMindf5.set_index('DateTime', inplace=True)
+
+    # Size6
+
+    df6 = pd.read_csv(path, header=[0])
+
+    df6.rename(columns={df6.columns[0]: 'DateTime'}, inplace=True)
+
+    df6['Date'] = pd.to_datetime(df6['DateTime']).dt.date.astype('str')
+    df6['Time'] = pd.to_datetime(df6['DateTime']).dt.time.astype('str')
+
+    df6['DateTime'] = pd.to_datetime(df6['Date'] + ' ' + df6['Time'])
+
+    df6.rename(columns={df6.columns[12]: 'Value'}, inplace=True)
+
+    df6['HouseNumber'] = housenumber
+    df6['Visit'] = visit
+    df6['Test'] = test
+    df6['Location'] = location
+    df6['Monitor'] = monitor
+    df6['Variable'] = 'Size 10.0'
+    df6['Unit'] = 'd/L'
+
+    df6 = df6.reindex(columns=columnsTitles)
+
+    df6.set_index('DateTime', inplace=True)
+
+    #  df6 One Minute Data
+
+    Interdf6 = (df6.resample("1T").mean())
+    OneMindf6 = Interdf6.interpolate()
+
+    OneMindf6['DateTime'] = pd.to_datetime(OneMindf6.index)
+
+    OneMindf6['Date'] = pd.to_datetime(OneMindf6['DateTime']).dt.date
+    OneMindf6['Time'] = pd.to_datetime(OneMindf6['DateTime']).dt.time
+
+    OneMindf6['HouseNumber'] = housenumber
+    OneMindf6['Visit'] = visit
+    OneMindf6['Test'] = test
+    OneMindf6['Location'] = location
+    OneMindf6['Monitor'] = monitor
+    OneMindf6['Variable'] = 'Size 10.0'
+    OneMindf6['Unit'] = 'ug/m3'
+
+    OneMindf6 = OneMindf6.reindex(columns=columnsTitles)
+
+    OneMindf6.set_index('DateTime', inplace=True)
+
+
+    # convert to concentrations
+
+    OneMinConc = OneMindf1.copy()
+    OneMinConc['Conc1'] = ((OneMindf1['Value'] * 3.14 * (0.0000003 ** 3) / 6)) * (10 ** 15) * 13.24
+    OneMinConc['Conc2'] = ((OneMindf1['Value'] * 3.14 * (0.0000003 ** 3) / 6) + (OneMindf2['Value'] * 3.14 * (0.0000005 ** 3) / 6)) * (10 ** 15) * 13.24
+    OneMinConc['Conc3'] = ((OneMindf1['Value'] * 3.14 * (0.0000003 ** 3) / 6) + (OneMindf2['Value'] * 3.14 * (0.0000005 ** 3) / 6) + (OneMindf3['Value'] * 3.14 * (0.000001 ** 3) / 6)) * (10 ** 15) * 13.24
+    OneMinConc['Conc4'] = ((OneMindf1['Value'] * 3.14 * (0.0000003 ** 3) / 6) + (OneMindf2['Value'] * 3.14 * (0.0000005 ** 3) / 6) + (OneMindf3['Value'] * 3.14 * (0.000001 ** 3) / 6) + (OneMindf4['Value'] * 3.14 * (0.0000025 ** 3) / 6)) * (10 ** 15) * 13.24
+    OneMinConc['Conc5'] = ((OneMindf1['Value'] * 3.14 * (0.0000003 ** 3) / 6) + (OneMindf2['Value'] * 3.14 * (0.0000005 ** 3) / 6) + (OneMindf3['Value'] * 3.14 * (0.000001 ** 3) / 6) + (OneMindf4['Value'] * 3.14 * (0.0000025 ** 3) / 6) + (OneMindf5['Value'] * 3.14 * (0.000005 ** 3) / 6)) * (10 ** 15) * 13.24
+    OneMinConc['Conc6'] = ((OneMindf1['Value'] * 3.14 * (0.0000003 ** 3) / 6) + (OneMindf2['Value'] * 3.14 * (0.0000005 ** 3) / 6) + (OneMindf3['Value'] * 3.14 * (0.000001 ** 3) / 6) + (OneMindf4['Value'] * 3.14 * (0.0000025 ** 3) / 6) + (OneMindf5['Value'] * 3.14 * (0.000005 ** 3) / 6) + (OneMindf6['Value'] * 3.14 * (0.00001 ** 3) / 6)) * (10 ** 15) * 13.24
+
+    # put concentrations back in OneMindfs
+
+    OneMindf1['Value'] = OneMinConc['Conc1']
+    OneMindf2['Value'] = OneMinConc['Conc2']
+    OneMindf3['Value'] = OneMinConc['Conc3']
+    OneMindf4['Value'] = OneMinConc['Conc4']
+    OneMindf5['Value'] = OneMinConc['Conc5']
+    OneMindf6['Value'] = OneMinConc['Conc6']
+
+    # combine dfs for loop
+
+    rawFrames = [df1, df2, df3, df4, df5, df6]
+
+    loopPM = pd.concat(rawFrames)
+
+    OneMindf = [OneMindf1, OneMindf2, OneMindf3, OneMindf4, OneMindf5, OneMindf6]
+
+    OneMinLoopPM = pd.concat(OneMindf)
+
+
+
+    if A == 1:
+        rawPM = loopPM
+        OneMinPM = OneMinLoopPM
+
+    if A > 1:
+        rawPM = pd.concat([loopPM, rawPM])
+        OneMinPM = pd.concat([OneMinLoopPM, OneMinPM])
+
+    A = A + 1
+    print(f)
+
+
+rawPM.to_csv(r'C:\Users\Kari\Desktop\HUD_Data_Dump\ProcessedFiles\PM_OU_RAW.csv')
+OneMinPM.to_csv(r'C:\Users\Kari\Desktop\HUD_Data_Dump\ProcessedFiles\PM_OU_1min.csv')
