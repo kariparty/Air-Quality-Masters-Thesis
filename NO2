@@ -1,0 +1,109 @@
+NO2_loop.py
+import glob
+import pandas as pd
+import os
+
+# 1 - Insert "masterpath" folder location (ie folder where all files are kept)
+# 2 - Insert specific files attribute under "files" (ie *PM_OU_*, *CO_IN_*, etc)
+# 3 - At bottom of code, insert where you would like the csv files to be saved
+
+masterpath = 'C:\\Users\\Kari\\Desktop\\HUD_Data_Dump\\AllFiles\\'
+
+files = [f for f in glob.glob(masterpath + "*NO2_IN_*.csv", recursive=True)]
+loopNO2 = pd.DataFrame()
+rawNO2 = pd.DataFrame()
+OneMinNO2 = pd.DataFrame()
+
+A = 1
+
+for f in files:
+    # paste file path for CO2 file, inside or outside, in the quotations below
+
+    path = f
+    file = (os.path.basename(path))
+    columnsTitles = ['DateTime', 'HouseNumber', 'Visit', 'Test', 'Location', 'Monitor', 'Variable', 'Unit', 'Value']
+
+    housenumber = file.split('_')[0]
+    visit = file.split('_')[1]
+    test = file.split('_')[2]
+    location = file.split('_')[3]
+    monitor = file.split('_')[4]
+
+    # NO2
+
+    df1 = pd.read_csv(path, header=[0])
+
+    df1['Date'] = pd.to_datetime(df1['Date Time']).dt.date.astype('str')
+    df1['Time'] = pd.to_datetime(df1['Date Time']).dt.time.astype('str')
+
+    df1['DateTime'] = pd.to_datetime(df1['Date'] + ' ' + df1['Time'])
+
+    df1.rename(columns={df1.columns[3]: 'Value'}, inplace=True)
+
+    df1['HouseNumber'] = housenumber
+    df1['Visit'] = visit
+    df1['Test'] = test
+    df1['Location'] = location
+    df1['Monitor'] = monitor
+    df1['Variable'] = 'NO2'
+    df1['Unit'] = 'ppm'
+
+    df1 = df1.reindex(columns=columnsTitles)
+
+    # result is what will be exported to database
+
+    loopNO2 = df1
+
+    loopNO2.set_index('DateTime', inplace=True)
+
+    # reference calibration file to calibrate raw NO2 values, and create new dataframe with these values
+
+    value = loopNO2['Value']
+
+    CalibNO2 = loopNO2.copy()
+
+    from NO2_Calibration import HUD_NO2calibration
+
+    CalibValues = HUD_NO2calibration(visit, monitor, value)
+
+    CalibNO2['Value'] = CalibValues
+
+    # divide raw data into 1 min intervals
+
+    InterNO2 = pd.DataFrame()
+
+    InterNO2 = (CalibNO2.resample("1T").mean())
+
+    # fill in missing values with mean of before/after values (interpolate)
+
+    OneMinLoopNO2 = InterNO2.interpolate()
+
+    OneMinLoopNO2['DateTime'] = pd.to_datetime(OneMinLoopNO2.index)
+    OneMinLoopNO2['Date'] = pd.to_datetime(OneMinLoopNO2['DateTime']).dt.date
+    OneMinLoopNO2['Time'] = pd.to_datetime(OneMinLoopNO2['DateTime']).dt.time
+
+    OneMinLoopNO2['HouseNumber'] = housenumber
+    OneMinLoopNO2['Visit'] = visit
+    OneMinLoopNO2['Test'] = test
+    OneMinLoopNO2['Location'] = location
+    OneMinLoopNO2['Monitor'] = monitor
+    OneMinLoopNO2['Variable'] = 'NO2'
+    OneMinLoopNO2['Unit'] = 'ppm'
+
+    OneMinLoopNO2 = OneMinLoopNO2.reindex(columns=columnsTitles)
+
+    OneMinLoopNO2.set_index('DateTime', inplace=True)
+
+    if A == 1:
+        rawNO2 = loopNO2
+        OneMinNO2 = OneMinLoopNO2
+
+    if A > 1:
+        rawNO2 = pd.concat([loopNO2, rawNO2])
+        OneMinNO2 = pd.concat([OneMinLoopNO2, OneMinNO2])
+
+    A = A + 1
+    print(f)
+
+rawNO2.to_csv(r'C:\Users\Kari\Desktop\HUD_Data_Dump\ProcessedFiles\NO2_IN_RAW.csv')
+OneMinNO2.to_csv(r'C:\Users\Kari\Desktop\HUD_Data_Dump\ProcessedFiles\NO2_IN_1min.csv')
