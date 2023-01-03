@@ -1,0 +1,86 @@
+EXF_loop.py
+import glob
+import pandas as pd
+import os
+import numpy as np
+
+# 1 - Insert "masterpath" folder location (ie folder where all files are kept)
+# 2 - Insert specific files attribute under "files" (ie *PM_OU_*, *CO_IN_*, etc)
+# 3 - At bottom of code, insert where you would like the csv files to be saved
+
+masterpath = 'C:\\Users\\Kari\\Desktop\\HUD_Data_Dump\\AllFiles\\'
+
+files = [f for f in glob.glob(masterpath + "*EXF_*.xls", recursive=True)]
+loopEXF = pd.DataFrame()
+rawEXF = pd.DataFrame()
+OneMinEXF = pd.DataFrame()
+
+A = 1
+
+for f in files:
+    # paste file path for CO2 file, inside or outside, in the quotations below
+
+    path = f
+    file = (os.path.basename(path))
+    columnsTitles = ['DateTime', 'HouseNumber', 'Visit', 'Test', 'Location', 'Monitor', 'Variable', 'Unit', 'Value']
+
+    # Velocity raw data
+
+    loopEXF = pd.read_csv(path, header=[5], delimiter='\t')
+
+    loopEXF.rename(columns={loopEXF.columns[3]: 'DateTimeOriginal'}, inplace=True)
+    loopEXF['DateTime'] = pd.to_datetime(loopEXF['DateTimeOriginal'], format='%d-%m-%Y,%H:%M:%S')
+    loopEXF['Date'] = pd.to_datetime(loopEXF['DateTime']).dt.date
+    loopEXF['Time'] = pd.to_datetime(loopEXF['DateTime']).dt.time
+    loopEXF.rename(columns={loopEXF.columns[1]: 'ValueOriginal'}, inplace=True)
+
+    loopEXF['HouseNumber'] = file.split('_')[0]
+    loopEXF['Visit'] = file.split('_')[1]
+    loopEXF['Test'] = file.split('_')[2]
+    loopEXF['Location'] = file.split('_')[3]
+    loopEXF['Monitor'] = file.split('_')[4]
+    loopEXF['Variable'] = 'Velocity'
+    loopEXF['Unit'] = 'm/s'
+    loopEXF['Value'] = loopEXF['ValueOriginal']
+
+    loopEXF = loopEXF.reindex(columns=columnsTitles)
+
+    loopEXF.set_index('DateTime', inplace=True)
+
+    # df1 convert to one minute intervals
+
+    OneMinLoopEXF = pd.DataFrame()
+
+    OneMinLoopEXF = (loopEXF.resample("1T").mean())
+
+    OneMinLoopEXF['DateTime'] = pd.to_datetime(OneMinLoopEXF.index)
+    OneMinLoopEXF['Date'] = pd.to_datetime(OneMinLoopEXF['DateTime']).dt.date
+    OneMinLoopEXF['Time'] = pd.to_datetime(OneMinLoopEXF['DateTime']).dt.time
+
+    OneMinLoopEXF['HouseNumber'] = file.split('_')[0]
+    OneMinLoopEXF['Visit'] = file.split('_')[1]
+    OneMinLoopEXF['Test'] = file.split('_')[2]
+    OneMinLoopEXF['Location'] = file.split('_')[3]
+    OneMinLoopEXF['Monitor'] = file.split('_')[4]
+    OneMinLoopEXF['Variable'] = 'Velocity'
+    OneMinLoopEXF['Unit'] = 'on/off'
+
+    OneMinLoopEXF = OneMinLoopEXF.reindex(columns=columnsTitles)
+
+    OneMinLoopEXF.set_index('DateTime', inplace=True)
+
+    OneMinLoopEXF['Value'] = np.where(OneMinLoopEXF['Value'] > 0, '1', '0')
+
+    if A == 1:
+        rawEXF = loopEXF
+        OneMinEXF = OneMinLoopEXF
+
+    if A > 1:
+        rawEXF = pd.concat([loopEXF, rawEXF])
+        OneMinEXF = pd.concat([OneMinLoopEXF, OneMinEXF])
+
+    A = A + 1
+    print(f)
+
+rawEXF.to_csv(r'C:\Users\Kari\Desktop\HUD_Data_Dump\ProcessedFiles\EXF_RAW.csv')
+OneMinEXF.to_csv(r'C:\Users\Kari\Desktop\HUD_Data_Dump\ProcessedFiles\EXF_1min.csv')
